@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using Monolith.Core.Shared.Models;
 using OneOf;
 
-namespace Monolith.Core.Application.Common.Abstractions;
+namespace Monolith.Core.Application.Abstractions;
 
 public interface ISqlRepository<T> where T : class
 {
