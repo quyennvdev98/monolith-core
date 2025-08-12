@@ -1,6 +1,8 @@
 using System.Linq.Expressions;
+using Monolith.Core.Shared.Models;
+using OneOf;
 
-namespace Monolith.Core.Domain.Repositories;
+namespace Monolith.Core.Application.Common.Abstractions;
 
 public interface ISqlRepository<T> where T : class
 {
@@ -16,21 +18,21 @@ public interface ISqlRepository<T> where T : class
     Task<List<T>> GetManyByConditionAsync(Expression<Func<T, bool>> conditionExpression = null,
         Func<IQueryable<T>, IQueryable<T>> specialAction = null, CancellationToken token = default);
 
-    // Task<Pagination<T>> GetManyByConditionWithPaginationAsync(Expression<Func<T, bool>> conditionExpression = null,
-    //     Func<IQueryable<T>, IQueryable<T>> specialAction = null, CancellationToken token = default);
+    Task<Pagination<T>> GetManyByConditionWithPaginationAsync(Expression<Func<T, bool>> conditionExpression = null,
+        Func<IQueryable<T>, IQueryable<T>> specialAction = null, CancellationToken token = default);
 
     Task<long> CountByConditionAsync(Expression<Func<T, bool>> conditionExpression = null,
     Func<IQueryable<T>, IQueryable<T>> specialAction = null, CancellationToken token = default);
 
-    Task<T> CreateOneAsync(T item, CancellationToken token = default);
+    Task<OneOf<T, Exception>> CreateOneAsync(T item, CancellationToken token = default);
 
-    Task CreateManyAsync(List<T> items, CancellationToken token = default);
+    Task<OneOf<Shared.Results.None, Exception>> CreateManyAsync(List<T> items, CancellationToken token = default);
 
-    Task RemoveOneAsync(Expression<Func<T, bool>> itemOrFilter,
+    Task<OneOf<Shared.Results.None, Exception>> RemoveOneAsync(OneOf<T, Expression<Func<T, bool>>> itemOrFilter,
         CancellationToken token = default);
 
-    // Task RemoveManyAsync(List<T>,Expression<Func<T, bool>> itemsOrFilter,
-    //     CancellationToken token = default);
+    Task<OneOf<Shared.Results.None, Exception>> RemoveManyAsync(OneOf<List<T>, Expression<Func<T, bool>>> itemsOrFilter,
+        CancellationToken token = default);
 
 }
 
