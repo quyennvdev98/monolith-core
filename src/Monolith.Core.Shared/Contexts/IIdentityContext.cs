@@ -1,6 +1,6 @@
 ﻿
 
-namespace Monolith.Core.Application.Common.Contexts;
+namespace Monolith.Core.Shared.Contexts;
 
 public interface IIdentityContext
 {

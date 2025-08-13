@@ -1,3 +1,3 @@
-namespace Monolith.Core.Application.Commands;
+namespace Monolith.Core.Shared.Commands;
 
 public interface ICommand;
