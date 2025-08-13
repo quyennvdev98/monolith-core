@@ -1,6 +1,6 @@
 using Monolith.Core.Domain.Enums;
 
-namespace Monolith.Core.Shared.Security;
+namespace Monolith.Core.Application.Abstractions.Security;
 
 public interface ISigningStrategy
 {

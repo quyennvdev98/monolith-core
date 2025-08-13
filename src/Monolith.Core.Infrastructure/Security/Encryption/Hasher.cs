@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
-using Monolith.Core.Shared.Security;
+using Monolith.Core.Application.Abstractions.Security;
 
 namespace Monolith.Core.Infrastructure.Security.Encryption;
 

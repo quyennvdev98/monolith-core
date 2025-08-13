@@ -1,8 +1,8 @@
 
 using System.Security.Cryptography;
 using System.Text;
+using Monolith.Core.Application.Abstractions.Security;
 using Monolith.Core.Domain.Enums;
-using Monolith.Core.Shared.Security;
 
 namespace Monolith.Core.Infrastructure.Security.Encryption;
 

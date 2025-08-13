@@ -1,8 +1,9 @@
 
 
+
 using Microsoft.Extensions.DependencyInjection;
+using Monolith.Core.Application.Abstractions.Security;
 using Monolith.Core.Infrastructure.Security.Encryption;
-using Monolith.Core.Shared.Security;
 
 namespace Monolith.Core.Infrastructure.Security;
 
