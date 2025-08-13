@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Monolith.Core.Persistence.DataContext;
+namespace Monolith.Core.Persistence;
 
 public sealed class CoreDbContext : DbContext
 {
