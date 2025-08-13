@@ -5,7 +5,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Monolith.Core.Domain\Monolith.Core.Domain.csproj" />
-  </ItemGroup>
 </Project>

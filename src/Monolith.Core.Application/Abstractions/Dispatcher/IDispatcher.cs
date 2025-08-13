@@ -1,9 +1,8 @@
 
+using System.Windows.Input;
+using Monolith.Core.Application.Abstractions.Queries;
 
-using Monolith.Core.Shared.Commands;
-using Monolith.Core.Shared.Queries;
-
-namespace Monolith.Core.Shared.Abstractions;
+namespace Monolith.Core.Application.Abstractions.Dispatcher;
 public interface IDispatcher
 {
     Task SendAsync<T>(T command, CancellationToken cancellationToken = default) where T : class, ICommand;

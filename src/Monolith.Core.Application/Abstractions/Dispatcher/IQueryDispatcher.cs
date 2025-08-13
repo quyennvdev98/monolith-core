@@ -1,4 +1,6 @@
-namespace Monolith.Core.Shared.Queries;
+using Monolith.Core.Application.Abstractions.Queries;
+
+namespace Monolith.Core.Application.Abstractions.Dispatcher;
 
 public interface IQueryDispatcher
 {

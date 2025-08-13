@@ -1,4 +1,4 @@
-namespace Monolith.Core.Shared.Queries;
+namespace Monolith.Core.Application.Abstractions.Queries;
 
 public interface IQueryHandler<TQuery, TResult>
     where TQuery : class, IQuery<TResult>

@@ -1,4 +1,4 @@
-namespace  Monolith.Core.Shared.Commands;
+namespace  Monolith.Core.Application.Abstractions.Commands;
 
 public interface ICommandHandler<TCommand> where TCommand : class, ICommand
 {

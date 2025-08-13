@@ -1,4 +1,7 @@
-namespace Monolith.Core.Shared.Commands;
+
+using Monolith.Core.Application.Abstractions.Commands;
+
+namespace Monolith.Core.Application.Abstractions.Dispatcher;
 
 public interface ICommandDispatcher
 {
