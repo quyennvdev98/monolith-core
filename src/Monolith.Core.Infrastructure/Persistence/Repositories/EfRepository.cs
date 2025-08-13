@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Monolith.Core.Shared.Abstractions;
+using Monolith.Core.Application.Abstractions.Repositories;
 using Monolith.Core.Shared.Models;
 using Monolith.Core.Shared.Results;
 using OneOf;

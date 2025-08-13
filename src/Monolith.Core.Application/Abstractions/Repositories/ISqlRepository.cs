@@ -1,8 +1,9 @@
 using System.Linq.Expressions;
 using Monolith.Core.Shared.Models;
+using Monolith.Core.Shared.Results;
 using OneOf;
 
-namespace Monolith.Core.Shared.Abstractions;
+namespace Monolith.Core.Application.Abstractions.Repositories;
 
 public interface ISqlRepository<T> where T : class
 {
@@ -26,12 +27,12 @@ public interface ISqlRepository<T> where T : class
 
     Task<OneOf<T, Exception>> CreateOneAsync(T item, CancellationToken token = default);
 
-    Task<OneOf<Results.None, Exception>> CreateManyAsync(List<T> items, CancellationToken token = default);
+    Task<OneOf<None, Exception>> CreateManyAsync(List<T> items, CancellationToken token = default);
 
-    Task<OneOf<Results.None, Exception>> RemoveOneAsync(OneOf<T, Expression<Func<T, bool>>> itemOrFilter,
+    Task<OneOf<None, Exception>> RemoveOneAsync(OneOf<T, Expression<Func<T, bool>>> itemOrFilter,
         CancellationToken token = default);
 
-    Task<OneOf<Results.None, Exception>> RemoveManyAsync(OneOf<List<T>, Expression<Func<T, bool>>> itemsOrFilter,
+    Task<OneOf<None, Exception>> RemoveManyAsync(OneOf<List<T>, Expression<Func<T, bool>>> itemsOrFilter,
         CancellationToken token = default);
 
 }

@@ -5,7 +5,7 @@ using Monolith.Core.Shared.Results;
 using OneOf;
 using Serilog;
 
-namespace Monolith.Core.Infrastructure.Repositories;
+namespace Monolith.Core.Persistence.Repositories;
 
 public class EfUnitOfWork : IUnitOfWork
 {
