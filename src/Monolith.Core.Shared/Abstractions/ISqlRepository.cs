@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using Monolith.Core.Shared.Models;
 using OneOf;
 
-namespace Monolith.Core.Application.Abstractions;
+namespace Monolith.Core.Shared.Abstractions;
 
 public interface ISqlRepository<T> where T : class
 {
@@ -26,12 +26,12 @@ public interface ISqlRepository<T> where T : class
 
     Task<OneOf<T, Exception>> CreateOneAsync(T item, CancellationToken token = default);
 
-    Task<OneOf<Shared.Results.None, Exception>> CreateManyAsync(List<T> items, CancellationToken token = default);
+    Task<OneOf<Results.None, Exception>> CreateManyAsync(List<T> items, CancellationToken token = default);
 
-    Task<OneOf<Shared.Results.None, Exception>> RemoveOneAsync(OneOf<T, Expression<Func<T, bool>>> itemOrFilter,
+    Task<OneOf<Results.None, Exception>> RemoveOneAsync(OneOf<T, Expression<Func<T, bool>>> itemOrFilter,
         CancellationToken token = default);
 
-    Task<OneOf<Shared.Results.None, Exception>> RemoveManyAsync(OneOf<List<T>, Expression<Func<T, bool>>> itemsOrFilter,
+    Task<OneOf<Results.None, Exception>> RemoveManyAsync(OneOf<List<T>, Expression<Func<T, bool>>> itemsOrFilter,
         CancellationToken token = default);
 
 }
