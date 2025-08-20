@@ -12,14 +12,12 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasKey(u => u.Id);
 
-        builder.Property(u => u.Id)
-            .ValueGeneratedOnAdd()
-            .HasDefaultValueSql("uuid_generate_v4()");
+        builder.Property(x => x.Id)
+            .HasConversion(x => x.Value, id => new UserId(id));
 
         builder.Property(e => e.CreatedAt)
-            .IsRequired()
-            .HasDefaultValueSql("NOW()");
-
+            .IsRequired();
+            
         builder.Property(e => e.UpdatedAt)
             .IsRequired(false);
 
@@ -78,12 +76,12 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasDefaultValue(true);
 
-        builder.HasMany(u => u.UserRoleGroups)
-               .WithOne()
-               .HasForeignKey("UserId")
-               .OnDelete(DeleteBehavior.Cascade);
+        builder.HasMany(u => u.UserMapRoleGroups)
+            .WithOne(rg => rg.User)
+            .HasForeignKey(rg => rg.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        // Indexes (tối ưu tìm kiếm)
+        // Indexes
         builder.HasIndex(u => u.UserName).IsUnique();
         builder.HasIndex(u => u.Email).IsUnique();
     }
