@@ -1,9 +1,10 @@
 namespace Monolith.Core.Domain.Entities;
 
-public sealed class PolicyMapRole : Entity<Guid>
+public sealed class PolicyMapRole : EntityBase
 {
-    public Guid PolicyId { get; set; }
+    public PolicyId PolicyId { get; set; }
+    public RoleId RoleId { get; set; }
+    
     public Policy Policy { get; set; }
-    public Guid RoleId { get; set; }
     public Role Role { get; set; }
 }

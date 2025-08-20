@@ -1,9 +1,13 @@
-using System.Security.Cryptography.X509Certificates;
 
 namespace Monolith.Core.Domain.Entities;
 
-public sealed class User : Entity<Guid>
+public sealed record UserId(Guid Value) : StronglyTypedId<Guid>(Value)
 {
+    public override string ToString() => base.ToString();
+}
+public sealed class User : EntityBase
+{
+    public UserId Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string UserName { get; set; }
@@ -25,6 +29,7 @@ public sealed class User : Entity<Guid>
     public DateTime? ChangedPasswordTime { get; set; }
     public DateTime? LastLoginAt { get; set; }
     public bool IsActivated { get; set; }
+    
     public List<UserMapRoleGroup> UserRoleGroups { get; set; }
 
 }

@@ -1,10 +1,10 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Monolith.Core.Domain.Entities;
 
-public interface ITrackable
+public abstract class EntityBase 
 {
-    byte[] RowVersion { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
     public bool IsRemoved { get; set; }
