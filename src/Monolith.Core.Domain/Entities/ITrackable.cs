@@ -5,8 +5,7 @@ namespace Monolith.Core.Domain.Entities;
 public interface ITrackable
 {
     byte[] RowVersion { get; set; }
-
-    DateTimeOffset CreatedDateTime { get; set; }
-
-    DateTimeOffset? UpdatedDateTime { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
+    public bool IsRemoved { get; set; }
 }
