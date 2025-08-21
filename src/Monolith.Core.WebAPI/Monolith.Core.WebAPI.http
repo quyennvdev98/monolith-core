@@ -1,0 +1,6 @@
+@Monolith.Core.WebAPI_HostAddress = http://localhost:5057
+
+GET {{Monolith.Core.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
