@@ -15,10 +15,9 @@ public sealed class RefreshTokenConfiguration : IEntityTypeConfiguration<Refresh
         builder.Property(x => x.Id)
             .HasConversion(x => x.Value, id => new RefreshTokenId(id));
 
-        builder.Ignore(x => x.TokenExpiryTime);
-        
         builder.HasOne(x => x.User)
-            .WithMany().HasForeignKey(x => x.UserId)
+            .WithMany(x => x.RefreshTokens)
+            .HasForeignKey(x => x.UserId)
             .HasPrincipalKey(x => x.Id)
             .OnDelete(DeleteBehavior.Cascade);
     }

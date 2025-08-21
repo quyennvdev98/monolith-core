@@ -76,6 +76,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasDefaultValue(true);
 
+
         builder.HasMany(u => u.UserMapRoleGroups)
             .WithOne(rg => rg.User)
             .HasForeignKey(rg => rg.UserId)

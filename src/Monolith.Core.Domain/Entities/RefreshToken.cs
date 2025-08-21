@@ -17,6 +17,4 @@ public sealed class RefreshToken : EntityBase
     public UserId UserId { get; set; }
     
     public User User { get; set; }
-
-
 }

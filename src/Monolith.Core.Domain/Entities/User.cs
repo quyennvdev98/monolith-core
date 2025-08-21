@@ -29,7 +29,8 @@ public sealed class User : EntityBase
     public DateTime? ChangedPasswordTime { get; set; }
     public DateTime? LastLoginAt { get; set; }
     public bool IsActivated { get; set; }
-    
-    public List<UserMapRoleGroup> UserMapRoleGroups { get; set; }
 
+    public List<UserMapRoleGroup> UserMapRoleGroups { get; set; }
+    public List<RefreshToken> RefreshTokens { get; set; }
+    
 }
