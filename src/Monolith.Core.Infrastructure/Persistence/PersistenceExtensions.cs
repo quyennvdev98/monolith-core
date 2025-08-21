@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Monolith.Core.Persistence;
 
-namespace Monolith.Core.Infrastructure.Persistence;
+namespace Monolith.Core.Infrastructure;
 
 public static class PersistenceExtensions
 {
@@ -28,6 +28,8 @@ public static class PersistenceExtensions
         services.AddDbContext<TDbContext>(x => x.UseNpgsql(dbConnectionString,
             options => options.MigrationsAssembly(typeof(TDbContext).Assembly.GetName().Name)));
         services.AddScoped<DbContext>(sp => sp.GetRequiredService<TDbContext>());
+
+        services.AddRepositories();
         return services;
     }
      

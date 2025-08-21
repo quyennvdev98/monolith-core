@@ -3,8 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Monolith.Core.Application.Abstractions.Commands;
 using Monolith.Core.Application.Abstractions.Dispatcher;
 using Monolith.Core.Infrastructure.Attributes;
+using Monolith.Core.Infrastructure.Commands;
 
-namespace Monolith.Core.Infrastructure.Commands;
+namespace Monolith.Core.Infrastructure;
 
 public static class Extensions
 {
