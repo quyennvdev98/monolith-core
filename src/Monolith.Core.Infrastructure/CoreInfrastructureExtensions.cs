@@ -14,7 +14,6 @@ public static class CoreInfrastructureExtensions
     {
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         
-        services.AddExceptionHandling();
         services.AddApp(configuration);
         services.AddSerialization();
         services.AddLogging();

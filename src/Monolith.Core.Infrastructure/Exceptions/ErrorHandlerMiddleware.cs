@@ -1,45 +1,52 @@
 using System.Net;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Monolith.Core.Application.Responses;
 
 namespace Monolith.Core.Infrastructure.Exceptions;
 
-public sealed class ErrorHandlerMiddleware : IMiddleware
+public class GlobalExceptionHandlingMiddleware
 {
-    private readonly IExceptionCompositionRoot _exceptionCompositionRoot;
-    private readonly ILogger<ErrorHandlerMiddleware> _logger;
+    private readonly RequestDelegate _next;
+    private readonly ILogger<GlobalExceptionHandlingMiddleware> _logger;
 
-    public ErrorHandlerMiddleware(IExceptionCompositionRoot exceptionCompositionRoot, ILogger<ErrorHandlerMiddleware> logger)
+    public GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
     {
-        _exceptionCompositionRoot = exceptionCompositionRoot;
+        _next = next;
         _logger = logger;
     }
 
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await next(context);
+            await _next(context);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unhandled exception occurred while processing the request.");
+            _logger.LogError(ex, "An unhandled exception occurred");
             await HandleExceptionAsync(context, ex);
         }
     }
-    
-    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
-    {
-        var errorResponse = _exceptionCompositionRoot.Map(exception);
-        
-        context.Response.StatusCode = (int) (errorResponse?.StatusCode ?? HttpStatusCode.InternalServerError);
-        context.Response.ContentType = "application/json";
-        var response = errorResponse?.Response;
 
-        if (response is null)
+    private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+        var response = ApiResponse.FailureResult(
+            "An internal server error occurred",
+            new List<ApiError>
+            {
+                new("InternalError", "An unexpected error occurred while processing your request")
+            });
+
+        var jsonResponse = JsonSerializer.Serialize(response, new JsonSerializerOptions
         {
-            return;
-        }           
-        await context.Response.WriteAsJsonAsync(response);
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+
+        await context.Response.WriteAsync(jsonResponse);
     }
 }

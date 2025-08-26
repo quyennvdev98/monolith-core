@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Monolith.Core.Domain.Entities;
+namespace Monolith.Core.Domain;
 
 public abstract class EntityBase 
 {
