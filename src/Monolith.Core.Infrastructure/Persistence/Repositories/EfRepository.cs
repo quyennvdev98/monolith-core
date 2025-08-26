@@ -69,69 +69,36 @@ public class EfRepository<T> : ISqlRepository<T> where T : class
     }
 
 
-    public virtual Task<OneOf<T, Exception>> CreateOneAsync(T item, CancellationToken token = default)
+    public async Task<T?> CreateOneAsync(T item, CancellationToken token = default)
     {
-        if (item is null) return Task.FromResult(OneOf<T, Exception>.FromT0(null));
-        try
-        {
-            var result = _collection.Add(item);
-            return Task.FromResult(OneOf<T, Exception>.FromT0(result.Entity));
-        }
-        catch (Exception e)
-        {
-            _logger.Error("Error while create one Item: {Error}", e.Message);
-            return Task.FromResult(OneOf<T, Exception>.FromT1(e));
-        }
+        if (item == null) return null;
+        await _collection.AddAsync(item, token);
+        
+        return item;
     }
 
-    public virtual Task<OneOf<None, Exception>> CreateManyAsync(List<T> items, CancellationToken token = default)
+    public async Task<bool> CreateManyAsync(List<T> items, CancellationToken token = default)
     {
-        if (items is not { Count: > 0 }) return Task.FromResult(OneOf<None, Exception>.FromT0(None.Value));
-        try
-        {
-            _collection.AddRange(items);
-            return Task.FromResult(OneOf<None, Exception>.FromT0(None.Value));
-        }
-        catch (Exception e)
-        {
-            _logger.Error("Error while create many Items: {Error}", e.Message);
-            return Task.FromResult(OneOf<None, Exception>.FromT1(e));
-        }
+        if (items == null || !items.Any()) return false;
+        await _collection.AddRangeAsync(items, token);
+        return true;
     }
 
-    public virtual async Task<OneOf<None, Exception>> RemoveOneAsync(OneOf<T, Expression<Func<T, bool>>> itemOrFilter,
-        CancellationToken token = default)
+    public async Task<bool> RemoveOneAsync(Expression<Func<T, bool>> filter, CancellationToken token = default)
     {
-        var item = await itemOrFilter.Match(Task.FromResult,
-            filter => GetFirstByConditionAsync(filter, null, token));
-        if (item is null) return None.Value;
-        try
-        {
-            _collection.Remove(item);
-            return None.Value;
-        }
-        catch (Exception e)
-        {
-            _logger.Error("Error while removing Item: {Error}", e.Message);
-            return e;
-        }
+        var entity = await _collection.FirstOrDefaultAsync(filter, token);
+        if (entity == null) return false;
+
+        _collection.Remove(entity);
+        return true;
     }
 
-    public virtual async Task<OneOf<None, Exception>> RemoveManyAsync(
-        OneOf<List<T>, Expression<Func<T, bool>>> itemsOrFilter, CancellationToken token = default)
+    public async Task<bool> RemoveManyAsync(Expression<Func<T, bool>> filter, CancellationToken token = default)
     {
-        var items = await itemsOrFilter.Match(Task.FromResult,
-            filter => GetManyByConditionAsync(filter, null, token));
-        if (items is not { Count: > 0 }) return None.Value;
-        try
-        {
-            _collection.RemoveRange(items);
-            return None.Value;
-        }
-        catch (Exception e)
-        {
-            _logger.Error("Error while removing Items: {Error}", e.Message);
-            return e;
-        }
+        var entities = await _collection.Where(filter).ToListAsync(token);
+        if (!entities.Any()) return false;
+
+        _collection.RemoveRange(entities);
+        return true ;
     }
 }

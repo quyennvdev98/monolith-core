@@ -18,18 +18,18 @@ public class EfUnitOfWork : IUnitOfWork
         _logger = logger;
     }
 
-    public async Task<OneOf<None, Exception>> SaveChangesAsync(CancellationToken token = default)
+    public async Task<bool> SaveChangesAsync(CancellationToken token = default)
     {
         _logger.Information("Save context async!");
         try
         {
             await _dbContext.SaveChangesAsync(token);
-            return None.Value;
+            return true;
         }
         catch (Exception e)
         {
             _logger.Error("Error while save changes using dbContext: {Error}", e.Message);
-            return e;
+            return false;
         }
     }
 }

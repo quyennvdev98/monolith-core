@@ -5,5 +5,5 @@ namespace Monolith.Core.Shared.Abstractions;
 
 public interface IUnitOfWork
 {
-    Task<OneOf<None, Exception>> SaveChangesAsync(CancellationToken token = default);
+    Task<bool> SaveChangesAsync(CancellationToken token = default);
 }
